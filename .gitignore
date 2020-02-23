@@ -1,0 +1,7 @@
+*.iso
+*.qcow2
+*.img
+*.raw
+id_rsa*
+id_rsa.*
+
