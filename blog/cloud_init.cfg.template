@@ -12,7 +12,7 @@ users:
     ssh-authorized-keys:
       - <sshPUBKEY>
 # only cert auth via ssh (console access can still login)
-ssh_pwauth: true
+ssh_pwauth: false
 disable_root: false
 chpasswd:
   list: |
