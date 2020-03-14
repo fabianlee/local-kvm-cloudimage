@@ -4,4 +4,5 @@
 *.raw
 id_rsa*
 id_rsa.*
+*-metadata
 

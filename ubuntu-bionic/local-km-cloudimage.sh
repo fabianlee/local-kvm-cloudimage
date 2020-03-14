@@ -22,7 +22,7 @@ if [ ! -f ~/Downloads/$baseimg ]; then
 fi
 
 
-hostname=testcloud1
+hostname=bioniccloud1
 if [ ! -f id_rsa ]; then
   echo "ERROR did not find ssh public/private key, generating now"
   ssh-keygen -t rsa -b 4096 -f id_rsa -C $hostname -N "" -q
@@ -45,7 +45,7 @@ qemu-img create -b ~/Downloads/$baseimg -f qcow2 $snapshot 5G
 qemu-img info $snapshot
 
 # insert metadata into seed image
-#echo "instance-id: $(uuidgen || echo i-abcdefg)" > $hostname-metadata
+echo "instance-id: $(uuidgen || echo i-abcdefg)" > $hostname-metadata
 cloud-localds -v --network-config=network_config_static.cfg $seed cloud_init.cfg $hostname-metadata
 
 # ensure file permissions belong to kvm group
@@ -69,6 +69,7 @@ virt-install --name $hostname \
   --graphics $graphicsType \
   --os-type Linux --os-variant $os_variant \
   --network network:default \
-  --console pty,target_type=serial
+  --console pty,target_type=serial \
+  --noautoconsole
 
 
