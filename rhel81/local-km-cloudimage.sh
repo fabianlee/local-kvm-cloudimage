@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Takes standard CentOS7 cloudimg and creates VM configured with cloud-init
+# Takes RHEL KVM cloud image and creates VM configured with cloud-init
 # 
 # uses snapshot and increases size of root filesystem so base image not affected
 # inserts cloud-init user, network, metadata into disk
@@ -14,10 +14,8 @@ os_variant="rhel7" # osinfo-query os | grep rhel
 baseimg=rhel-8.1-x86_64-kvm.qcow2
 if [ ! -f ~/Downloads/$baseimg ]; then
   echo "ERROR did not find ~/Downloads/$baseimg"
-  #echo "Doing download...."
-  #wget http://cloud.centos.org/centos/7/images/$baseimg -O ~/Downloads/$baseimg
-  #echo ""
-  #echo "$baseimg downloaded now.  Run again"
+  echo "Get the RHEL KVM cloud image manually at:"
+  echo "https://access.redhat.com/downloads/content/479/ver=/rhel---8/8.1/x86_64/product-software"
   exit 2
 fi
 
@@ -39,9 +37,9 @@ disk2=$hostname-extra.qcow2
 graphicsType=vnc
 
 
-# create working snapshot, increase size to 10G
+# create working snapshot, increase size from 10G to 12G
 sudo rm $snapshot
-qemu-img create -b ~/Downloads/$baseimg -f qcow2 $snapshot 10G
+qemu-img create -b ~/Downloads/$baseimg -f qcow2 $snapshot 12G
 qemu-img info $snapshot
 
 # insert metadata into seed image
